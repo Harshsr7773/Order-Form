@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Product Order Form</title>
+  <style>
+    table { border-collapse: collapse; }
+    th, td { padding: 8px; text-align: center; }
+    input[type="number"] { width: 60px; }
+  </style>
+</head>
+<body>
+  <h2>Product Order Form</h2>
+  <form id="orderForm">
+    <label>Name: <input type="text" name="name" required></label><br><br>
+    <label>Product:
+      <select name="product" required>
+        <option value="K.V Blue">K.V Blue</option>
+        <option value="K.V Yellow Blue">K.V Yellow Blue</option>
+        <!-- Add more products -->
+      </select>
+    </label><br><br>
+    <label>GSM:
+      <select name="gsm" required>
+        <option value="65">65</option>
+        <option value="68">68</option>
+        <option value="72">72</option>
+        <!-- Add more GSM -->
+      </select>
+    </label><br><br>
+
+    <table border="1">
+      <tr>
+        <th>Size</th>
+        <th>50</th>
+        <th>100</th>
+      </tr>
+      <tr>
+        <td>2</td>
+        <td><input type="number" name="2_50" min="0"></td>
+        <td><input type="number" name="2_100" min="0"></td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td><input type="number" name="3_50" min="0"></td>
+        <td><input type="number" name="3_100" min="0"></td>
+      </tr>
+      <!-- Add more sizes if needed -->
+    </table><br>
+
+    <button type="submit">Submit</button>
+  </form>
+
+  <div id="response"></div>
+
+  <script>
+    document.getElementById("orderForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const form = e.target;
+      const data = new FormData(form);
+      fetch("https://script.google.com/macros/s/AKfycbw4w5IUrZm9R6cSGcP7ir3pjqOS0ZceNNPce7n-WseUWVoA-8Dw1-iw7K4xgSU4vu5eag/exec", {
+        method: "POST",
+        body: data
+      })
+      .then(res => res.text())
+      .then(txt => {
+        document.getElementById("response").innerText = txt;
+        form.reset();
+      })
+      .catch(err => {
+        document.getElementById("response").innerText = "Error: " + err;
+      });
+    });
+  </script>
+</body>
+</html>
